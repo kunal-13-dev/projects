@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0c53af83e9.js" crossorigin="anonymous"></script>
+    <title>scorekeeper game</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .container{
+            width: 30%;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .image-section img{
+            width: 31rem;
+        }
+        .score-section {
+            padding-top: 2rem;
+            position: relative;
+        }
+        .score-section .score{
+            color: black;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .menu{
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        #first{
+            margin-right: 10px;
+        }
+        #second{
+            margin-left: 10px;
+        }
+        #numbers{
+            width: 50px;
+            height: 25px;
+            border-radius: 15px;
+            background-color: #ccc;
+            margin-left: 7px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            cursor: pointer;
+        }
+        #numbers p{
+            font-size: 17px;
+        }
+        #numbers i{
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+        #dropdown{
+            display: flex;
+            flex-direction: column;
+            width: 0;
+            border-radius: 5px;
+            padding: 7px 0 7px 0;
+            background: linear-gradient(to bottom,white,lightBlue);
+            box-shadow: 0 0 5px -2px rgba(0,0,0,0.7);
+            z-index: 1;
+            margin-left: 5.9rem;
+            position: absolute;
+            transition: 0.4s;
+            overflow: hidden;
+        }
+        #dropdown span{
+            width: 100%;
+            padding-left: 15px;
+            cursor: pointer;
+        }
+        #dropdown span:hover{
+            background-color: blue;
+            color: white;
+        }
+        .btns-section{
+            display: flex;
+            margin-top: 1.4rem;
+        }
+        .btns-section button{
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            opacity: 1;
+        }
+        .btns-section button:nth-child(1){
+            background-color: green;
+            color: white;
+            opacity: 1;
+        }
+        .btns-section button:nth-child(2){
+            background-color: blue;
+            color: white;
+        }
+        .btns-section button:nth-child(3){
+            background-color: red;
+            color: white;
+            padding: 10px 40px;
+        }
+        @media(max-width:500px){
+            .image-section img{
+                width: 18rem;
+            }
+            .container{
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                margin-left: 2rem;
+                position: relative;
+                margin: auto;
+                padding: 2rem 0 0 1rem;
+            }
+            .btns-section button{
+                padding: 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="tt.png" alt="">
+            <h2>Ping Pong Score Keeper</h2>
+        </div>
+        <div class="score-section">
+            <span class="score" id="first">0</span>
+            <span class="score">to</span>
+            <span class="score" id="second">0</span>
+            <p>Use the below buttons to Keep score</p>
+            <div class="menu">
+                <h2>Playing To</h2>
+                <span id="numbers">
+                    <p id="change">5</p>
+                    <i class="fas fa-sort-down"></i>
+                </span>
+                <div id="dropdown">
+                    <span id="select">5</span>
+                    <span id="select">6</span>
+                    <span id="select">7</span>
+                    <span id="select">8</span>
+                    <span id="select">9</span>
+                    <span id="select">10</span>
+                    <span id="select">11</span>
+                    <span id="select">12</span>
+                    <span id="select">13</span>
+                    <span id="select">14</span>
+                    <span id="select">15</span>
+                    <span id="select">16</span>
+                </div>
+            </div>
+        </div>
+        <div class="btns-section">
+            <button id="btn1">+1 Player one</button>
+            <button id="btn2">+2 Player Two</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let number = document.getElementById('numbers');
+        let dropdown = document.querySelector('#dropdown');
+        let select = document.querySelectorAll('#select');
+        let change = document.getElementById('change');
+        let first = document.getElementById('first');
+        let second = document.getElementById('second');
+        let btn1 = document.getElementById('btn1');
+        let btn2 = document.getElementById('btn2');
+        let reset = document.getElementById('reset');
+        let x = 0;
+        let y = 0;
+
+        number.addEventListener('click', () => {
+            dropdown.style.width = '4rem';
+            dropdown.style.display = 'flex';
+        });
+
+        for(let s of select){
+            s.addEventListener("click", () => {
+                change.innerText = s.innerText;
+                dropdown.style.width = '0';
+            })
+        };
+
+            btn1.addEventListener('click', () => {
+            first.innerText = ++x;
+            if(first.innerText === change.innerText){
+                first.style.color = 'green';
+                second.style.color = 'red';
+                btn1.disabled = true;
+                btn2.disabled = true;
+                btn1.style.opacity = 0.5;
+                btn2.style.opacity = 0.5;
+            }
+        })
+        
+        btn2.addEventListener('click', () => {
+            second.innerText = ++y;
+            if(second.innerText === change.innerText){
+                second.style.color = 'green';
+                first.style.color = 'red';
+                btn1.disabled = true;
+                btn2.disabled = true;
+                btn1.style.opacity = 0.5;
+                btn2.style.opacity = 0.5;
+            }
+        })
+        reset.addEventListener('click', ()=>{
+            first.innerText = 0;
+            second.innerText = 0;
+            first.style.color = 'black';
+            second.style.color = 'black';
+            btn1.style.opacity = 1;
+            btn2.style.opacity = 1;
+            x = 0;
+            y = 0;
+            btn1.disabled = false;
+            btn2.disabled = false;
+        })
+
+        window.addEventListener('mouseup', (e)=>{
+            if(e.target != dropdown && e.target.parentNode != dropdown){
+                dropdown.style.display = 'none';
+            }
+        })
+    </script>
+</body>
+</html>
